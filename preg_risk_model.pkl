@@ -1,0 +1,15 @@
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+import joblib
+
+# Training with 3rd-trimester specific indicators
+data = {
+    'Age': [25, 35, 29, 40, 33, 28],
+    'SystolicBP': [110, 145, 120, 150, 130, 115],
+    'BS': [7.2, 9.5, 7.0, 12.0, 8.8, 7.5],
+    'BodyTemp': [98, 101, 98, 102, 99, 98],
+    'RiskLevel': [0, 2, 0, 2, 1, 0] # 0:Low, 1:Mid, 2:High
+}
+df = pd.DataFrame(data)
+model = RandomForestClassifier().fit(df.drop('RiskLevel', axis=1), df['RiskLevel'])
+joblib.dump(model, 'preg_risk_model.pkl')
